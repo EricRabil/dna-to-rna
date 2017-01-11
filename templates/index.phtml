@@ -1,0 +1,63 @@
+<div class="jumbotron">
+  <h1>DNA to mRNA / Proteins Converter</h1>
+  <p>Made by Eric Rabil</p>
+  <p>Follow me on instagram <a href="http://instagram.com/ericrabil/">@ericrabil</a> and follow my spam <a href="http://instagram.com/sdhc.k12.fl.us/">@sdhc.k12.fl.us</a></p>
+</div>
+<form action="/translate" method="post">
+  <div class="row">
+    <div class="col-md-9">
+      <input type="text" class="form-control" name="dna" id="dna" placeholder="DNA to translate" aria-describedby="basic-addon2">
+    </div>
+    <div class="col-md-3">
+      <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+          <button type="submit" class="btn btn-success">Translate</button>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <?php
+    if($translated){
+      if($error){
+      ?>
+      <div class="panel panel-danger">
+        <div class="panel-heading">Errors</div>
+        <div class="panel-body">
+          <?php echo $errorText; ?>
+        </div>
+      </div>
+      <?php
+    }
+    ?>
+    <div class="panel panel-info">
+  <div class="panel-heading">Output (What's actually happening)</div>
+  <div class="panel-body">
+    <?php echo $output; ?>
+  </div>
+</div>
+<div class="panel panel-success">
+  <div class="panel-heading">Translated Stuff</div>
+  <div class="panel-body">
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon2">Original DNA</span>
+      <input type="text" class="form-control" <?php echo 'value="'.$dna.'"'?> aria-describedby="basic-addon2" disabled>
+    </div>
+    <br>
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon2">Translated mRNA</span>
+      <input type="text" class="form-control" <?php echo 'value="'.$mrna.'"'?> aria-describedby="basic-addon2" disabled>
+    </div>
+    <br>
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon2">Proteins</span>
+      <input type="text" class="form-control" <?php echo 'value="'.$proteins.'"'?> aria-describedby="basic-addon2" disabled>
+    </div>
+  </div>
+</div>
+    <?php
+    }
+    ?>
+  </div>
+</form>
