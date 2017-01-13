@@ -22,8 +22,8 @@ class TranslateController implements IController {
           'AAC' => 'asn', 'AAA' => 'lys', 'AAG' => 'lys', 'GAU' => 'asp', 'GAC' => 'asp', 'GAA' => 'glu', 'GAG' => 'glu', 'UGU' => 'cys',
           'UGC' => 'cys', 'UGA' => 'STOP', 'UGG' => 'trp', 'CGU' => 'arg', 'CGC' => 'arg', 'CGG' => 'arg', 'CGA' => 'arg', 'AGU' => 'ser',
           'AGC' => 'ser', 'AGA' => 'arg', 'AGG' => 'arg', 'GGU' => 'gly', 'GGG' => 'gly', 'GGC' => 'gly', 'GGA' => 'gly'];
-      $dna = $_POST['dna'];
-      $dna_split = explode('-', $dna);
+      $dna = preg_replace('/\PL/u', '', strtoupper($_POST['dna']));
+      $dna_split = str_split($dna, 3);
       if(empty($dna_split)){
         $this->model->hasError = true;
         $this->model->errorText .= "The DNA sequence cannot be empty.<br />";
@@ -32,9 +32,9 @@ class TranslateController implements IController {
       }else{
         $rna = str_replace(array_keys($dnatomrna), array_values($dnatomrna), $dna);
       }
-      $this->model->mrna = $rna;
-      $this->model->dna = $dna;
-      $split = explode('-', $rna);
+      $split = str_split($rna, 3);
+      $this->model->mrna = implode('-', $split);
+      $this->model->dna = implode('-', $dna_split);
       $proteinString = "";
       $started = false;
       foreach($split as $id => $codon){
@@ -62,9 +62,12 @@ class TranslateController implements IController {
         }elseif($started && $codon === $startcodon){
             $this->model->output .= "`".$clean."` is a start codon but the sequence has already been started. [mRNA/DNA Sequence ".$id."]<br />";
             $proteinString .= $proteins[$codon].'-';
-        }else{
+        }elseif($codon != end($split)){
             $this->model->output .= "`".$clean."` translates to a ".$proteins[$codon]." protein. [mRNA/DNA Sequence ".$id."]<br />";
             $proteinString .= $proteins[$codon].'-';
+        }else{
+            $this->model->output .= "`".$clean."` translates to a ".$proteins[$codon]." protein. [mRNA/DNA Sequence ".$id."]<br />";
+            $proteinString .= $proteins[$codon];
         }
       }
 
