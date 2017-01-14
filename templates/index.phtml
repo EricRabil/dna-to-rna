@@ -1,14 +1,22 @@
-<div class="jumbotron">
+<!-- <div class="jumbotron">
   <h1>DNA to mRNA / Proteins Converter</h1>
   <p>Made by Eric Rabil</p>
   <p>Follow me on instagram <a href="http://instagram.com/ericrabil/">@ericrabil</a> and follow my spam <a href="http://instagram.com/sdhc.k12.fl.us/">@sdhc.k12.fl.us</a></p>
+</div> -->
+<div class="col-lg-6 col-lg-offset-3">
+  <div class="panel panel-success">
+    <div class="panel-heading">Converter has been fixed</div>
+    <div class="panel-body">
+      The converter has been fixed to allow DNA to be translated in any capitalization and without dashes :)
+    </div>
+  </div>
 </div>
 <form action="/translate" method="post">
   <div class="row">
-    <div class="col-md-9">
+    <div class="col-md-10">
       <input type="text" class="form-control" name="dna" id="dna" placeholder="DNA to translate" aria-describedby="basic-addon2">
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
       <div class="btn-group btn-group-justified" role="group" aria-label="...">
         <div class="btn-group" role="group">
           <button type="submit" class="btn btn-success">Translate</button>
@@ -19,6 +27,9 @@
   </form>
     <?php
     if($translated){
+      ?>
+      <div class="col-md-12">
+      <?php
       if($error){
       ?>
       <div class="panel panel-danger">
@@ -54,6 +65,7 @@
       <input type="text" class="form-control" <?php echo 'value="'.$proteins.'"'?> aria-describedby="basic-addon2" disabled>
     </div>
   </div>
+</div>
 </div>
     <?php
     }
